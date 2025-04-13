@@ -31,4 +31,16 @@ Run locally: `npm run dev`
 
 ### Dev notes
 
+- I would like to end up with "home" page where you have a list of people and the filtering, and when you click on a person, you will got to `/person/${personId}` where you see the details
+  - **Home screen**
+    - top part is search and filtering
+    - filtering info in URL
+    - rest is list with pagination
+      - data from paginated API endpoint
+    - when you click on a person you are redirected to the person page
+  - **Person page**
+    - top has back button
+    - rest is table with information about the person
+- I will start with some page skeleton and ssr parts for data
+
 ### Submitted solution (After I am done with coding)
