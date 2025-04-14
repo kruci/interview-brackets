@@ -82,15 +82,44 @@ export const getPaginatedPeople = async (page = 1) =>
     (res) => res.json() as unknown as PaginatedPeople
   );
 
-export const getPersonId = (person: Person) => {
-  const match = person.url.match(/(\d*)\/$/);
-  console.log("Person", person);
-  console.log("Matches", match?.[0], match?.[1]);
-
+export const getIdFromUrl = (url: string) => {
+  const match = url.match(/(\d*)\/$/);
   return `${match?.[1]}`;
 };
 
-export const getPerson = (personId: string) =>
+export const getPerson = async (personId: string) =>
   fetch(`${baseUrl}/people/${personId}`).then(
     (res) => res.json() as unknown as Person
   );
+
+export const getPersonPlanet = async (person: Person) => {
+  if (!person.homeworld) {
+    return "unknown";
+  }
+
+  const planetId = getIdFromUrl(person.homeworld);
+
+  return fetch(`${baseUrl}/planets/${planetId}`).then(async (res) => {
+    const data = (await res.json()) as unknown as { name: string };
+    return data.name;
+  });
+};
+
+export const getPersonSpecies = async (person: Person) => {
+  if (!person.species?.length) {
+    return ["unknown"];
+  }
+
+  const species = await Promise.all(
+    person.species.map(async (speciesUrl) => {
+      const speciesId = getIdFromUrl(speciesUrl);
+
+      return fetch(`${baseUrl}/species/${speciesId}`).then(async (res) => {
+        const data = (await res.json()) as unknown as { name: string };
+        return data.name;
+      });
+    })
+  );
+
+  return species;
+};
