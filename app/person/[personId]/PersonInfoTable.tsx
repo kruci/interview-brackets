@@ -36,13 +36,21 @@ export const PersonInfoTable = ({
   ];
 
   return (
-    <Grid container spacing={2} direction="column">
+    <Grid
+      container
+      spacing={2}
+      direction="column"
+      role="table"
+      aria-label="Character information"
+      aria-rowcount={gridData.length}
+    >
       {gridData.map(({ label, value, icon: Icon }) => (
         <Box
           key={label}
           sx={{ display: "flex", gap: "8px", flexDirection: "row" }}
+          role="row"
         >
-          <Typography sx={{ fontWeight: "700" }}>
+          <Typography sx={{ fontWeight: "700" }} role="row-header">
             {label}
             {Icon ? (
               <Icon
@@ -57,7 +65,7 @@ export const PersonInfoTable = ({
             ) : null}
             :
           </Typography>
-          <Typography>{value}</Typography>
+          <Typography role="cell">{value}</Typography>
         </Box>
       ))}
     </Grid>
