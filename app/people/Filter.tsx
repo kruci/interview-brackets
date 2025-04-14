@@ -66,7 +66,7 @@ export const Filter = () => {
         noValidate
         autoComplete="off"
         onSubmit={handleSubmit}
-        // if we use form action, it would do full page reload with a "page blink"
+        // no form action as we are not really doing anything requiring BE
       >
         <TextField
           sx={{ flex: 1 }}

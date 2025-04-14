@@ -27,6 +27,7 @@ export const PeopleTableRow = ({ person, minHeight }: PeopleTableRowProps) => {
   return (
     <>
       <ListItem
+        role="row"
         component="a"
         slotProps={{
           root: { "aria-label": `Open ${person.name} profile` },
@@ -42,10 +43,14 @@ export const PeopleTableRow = ({ person, minHeight }: PeopleTableRowProps) => {
           background: isTooShort ? "#dbdbdb" : undefined,
         }}
       >
-        <ListItemAvatar>
+        <ListItemAvatar role="cell">
           <Avatar src={avatarUrl} alt={person.name} />
         </ListItemAvatar>
-        <ListItemText primary={person.name} secondary={displayHeight} />
+        <ListItemText
+          primary={person.name}
+          secondary={displayHeight}
+          role="cell"
+        />
       </ListItem>
       <Divider />
     </>
