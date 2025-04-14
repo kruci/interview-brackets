@@ -19,6 +19,7 @@ const SearchForm = styled("form")(() => ({
   gap: "10px",
 }));
 
+// TODO: use form control
 export const Filter = () => {
   const router = useRouter();
   const searchParams = useSearchParams();

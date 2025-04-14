@@ -1,3 +1,5 @@
+// TODO: move types to separate files
+// NOTE: generated
 /**
  * A person within the Star Wars universe
  */
@@ -77,10 +79,32 @@ export type PaginatedPeople = {
 
 const baseUrl = `https://swapi.py4e.com/api`;
 
-export const getPaginatedPeople = async (page = 1) =>
-  fetch(`${baseUrl}/people/?page=${page}`).then(
-    (res) => res.json() as unknown as PaginatedPeople
-  );
+// NOTE: API seem to be very unstable on this path (or I have bad wifi ?)
+export const getPaginatedPeople = async (page = 1, search?: string) => {
+  const searchParams = new URLSearchParams();
+
+  if (page) {
+    searchParams.set("page", `${page}`);
+  }
+
+  if (search) {
+    searchParams.set("search", search);
+  }
+
+  const runRequest = async () =>
+    fetch(`${baseUrl}/people/?${searchParams.toString()}`).then(
+      (res) => res.json() as unknown as PaginatedPeople
+    );
+
+  // TODO: make nicer if time
+  // Because of the Instability issues I experience, we just try again later
+  try {
+    return runRequest();
+  } catch {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    return runRequest();
+  }
+};
 
 export const getIdFromUrl = (url: string) => {
   const match = url.match(/(\d*)\/$/);
