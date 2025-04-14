@@ -20,7 +20,8 @@ export default function People({ searchParams }: PeoplePageProps) {
       >
         {/*
         We could have suspense here and make it so we see some loader on table each time we change page
-        but page change is fast, so I do not want to bother with it
+        but page change is fast, so I do not want to bother with it, as I would have to extract the pagination
+        to not be covered by the suspense placeholder
         <Suspense fallback={<Skeleton variant="rectangular" height={500} />} key={JSON.stringify(searchParams)}>
          */}
         <PeopleTable searchParams={searchParams} />
